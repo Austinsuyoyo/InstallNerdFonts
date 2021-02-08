@@ -15,11 +15,11 @@ $choices = [System.Management.Automation.Host.ChoiceDescription[]]($all, $cur)
 $AllUserFlag = $host.UI.PromptForChoice($title, $message, $choices, 0)
 
 if($AllUserFlag -eq 0){
-    #https://superuser.com/questions/749243/detect-if-powershell-is-running-as-administrator
-    if(-not([bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544"))){
-        Show-Pause "Please run as Admininstrator"
-        Exit
-    }
+   #https://superuser.com/questions/749243/detect-if-powershell-is-running-as-administrator
+   if(-not([bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544"))){
+       Show-Pause "Please run as Admininstrator"
+       Exit
+   }
 }
 
 #######################################################################################
@@ -119,5 +119,6 @@ if ($IsWindows) {
 #
 # Clean
 Write-Host Cleanup $Font_Name folder and zip
-Remove-Item $PSScriptRoot\$Font_Name -Recurse -ErrorAction SilentlyContinue 
+Get-ChildItem $PSScriptRoot\$Font_Name -Recurse | Remove-Item -Force
+Remove-Item $PSScriptRoot\$Font_Name
 Remove-Item $PSScriptRoot\$Font_Name_Extend
